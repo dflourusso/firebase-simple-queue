@@ -1,3 +1,6 @@
+import * as functions from 'firebase-functions'
+import * as admin from 'firebase-admin'
+
 function parseError(error) {
   let message = 'Error to process the task'
   if (Object.prototype.toString.call(error) === '[object Error]') {
@@ -13,7 +16,7 @@ function parseError(error) {
   }
 }
 
-export default (functions, admin, key, callback) => {
+export default (key, callback) => {
   const databaseRef = admin.database().ref(key)
 
   function nextTask() {

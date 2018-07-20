@@ -3,7 +3,7 @@ set -e
 
 version=${1:-patch}
 git up
-poi build
+gulp
 git add dist
 git commit -m 'release'
 npm version $version

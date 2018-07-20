@@ -2,12 +2,19 @@
   "name": "firebase-simple-queue",
   "version": "1.0.7",
   "description": "Simple queue implementation for firebase cloud functions and realtime database",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "repository": "git@github.com:dflourusso/firebase-simple-queue.git",
   "author": "Daniel Fernando Lourusso <dflourusso@gmail.com>",
   "license": "MIT",
   "private": false,
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
-    "poi": "^10.2.9"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1"
   }
 }
