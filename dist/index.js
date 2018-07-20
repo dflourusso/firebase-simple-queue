@@ -42,37 +42,57 @@ exports.default = function (key, callback) {
     });
   }
 
-  async function runTask(options) {
-    if (!options) return false;
-    var id = options.id,
-        task = options.task;
+  function runTask(options) {
+    var id, task, current_id, updates;
+    return Promise.resolve().then(function () {
+      if (!options) {
+        return false;
+      } else {
+        return Promise.resolve().then(function () {
+          id = options.id;
+          task = options.task;
+          return new Promise(function (resolve) {
+            return databaseRef.child('current').transaction(function (p) {
+              var ret = p || id;
+              resolve(ret);
+              return ret;
+            });
+          });
+        }).then(function (_resp) {
+          current_id = _resp;
 
-    var current_id = await new Promise(function (resolve) {
-      return databaseRef.child('current').transaction(function (p) {
-        var ret = p || id;
-        resolve(ret);
-        return ret;
-      });
-    });
 
-    if (current_id != id) return false;
+          if (current_id != id) {
+            return false;
+          } else {
+            return Promise.resolve().then(function () {
+              updates = { current: null };
+              return Promise.resolve().then(function () {
+                return callback(task);
+              }).then(function () {
 
-    var updates = { current: null };
-    try {
-      await callback(task);
-
-      updates['tasks/' + id] = null;
-    } catch (error) {
-      console.log('ERROR', error);
-      updates['tasks/' + id + '/_error'] = parseError(error);
-    }
-
-    await databaseRef.update(updates);
-    return true;
+                updates['tasks/' + id] = null;
+              }).catch(function (error) {
+                console.log('ERROR', error);
+                updates['tasks/' + id + '/_error'] = parseError(error);
+              });
+            }).then(function () {
+              return databaseRef.update(updates);
+            }).then(function () {
+              return true;
+            });
+          }
+        });
+      }
+    }).then(function () {});
   }
 
-  async function startQueue() {
-    return await runTask((await nextTask()));
+  function startQueue() {
+    return Promise.resolve().then(function () {
+      return nextTask();
+    }).then(function (_resp) {
+      return runTask(_resp);
+    });
   }
 
   var onCreateTask = functions.database.ref('/' + key + '/tasks/{id}').onCreate(startQueue);
