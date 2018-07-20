@@ -18,7 +18,7 @@ Initialize the queue in cloud functions index
 
 ```javascript
 // Import the plugin
-import queue from 'firebase-simple-queue'
+import * as queue from 'firebase-simple-queue'
 
 /* Define a callback with your custom async logic
  * You callback will receve as parameter witch you have been pushed in the task
