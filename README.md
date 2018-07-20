@@ -3,6 +3,9 @@
 Simple queue implementation for firebase cloud functions and realtime database
 
 > The queue will sequentially run each task added in the queue
+> If your calllback is asyncronous, make sure to await each asyncronous subtasks or async functions, otherwise the queue could not work properly
+
+![](example.gif)
 
 ## Installation
 
@@ -10,7 +13,7 @@ Simple queue implementation for firebase cloud functions and realtime database
 
 or using npm
 
-`npm install firebase-simple-queue`
+`npm install --save firebase-simple-queue`
 
 ## Usage
 
