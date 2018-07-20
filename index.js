@@ -16,7 +16,7 @@ function parseError(error) {
   }
 }
 
-export default (key, callback) => {
+module.exports = (key, callback) => {
   const databaseRef = admin.database().ref(key)
 
   function nextTask() {
