@@ -2,7 +2,7 @@
 
 Simple queue implementation for firebase cloud functions and realtime database
 
-| The queue will sequentially run each task added in the queue
+> The queue will sequentially run each task added in the queue
 
 ## Installation
 
@@ -20,7 +20,9 @@ Initialize the queue in cloud functions index
 // Import the plugin
 import queue from 'firebase-simple-queue'
 
-// Define a callback with your custom async logic like:
+/* Define a callback with your custom async logic
+ * You callback will receve as parameter witch you have been pushed in the task
+ */
 function calback(task) {
   return new Promise(resolve => {
     setTimeout(() => {
