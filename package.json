@@ -2,7 +2,7 @@
   "name": "firebase-simple-queue",
   "version": "1.0.6",
   "description": "Simple queue implementation for firebase cloud functions and realtime database",
-  "main": "dist/firebase-simple-queue.js",
+  "main": "dist/main.js",
   "repository": "git@github.com:dflourusso/firebase-simple-queue.git",
   "author": "Daniel Fernando Lourusso <dflourusso@gmail.com>",
   "license": "MIT",
@@ -12,7 +12,8 @@
     "firebase-functions": "^1.0.1"
   },
   "devDependencies": {
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0"
+    "firebase-admin": "^5.13.0",
+    "firebase-functions": "^1.1.0",
+    "poi": "^10.2.9"
   }
 }

@@ -3,7 +3,7 @@ set -e
 
 version=${1:-patch}
 git up
-./node_modules/.bin/webpack
+poi build
 git add dist
 git commit -m 'release'
 npm version $version
