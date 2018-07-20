@@ -2,7 +2,7 @@
   "name": "firebase-simple-queue",
   "version": "1.0.0",
   "description": "Simple queue implementation for firebase cloud functions and realtime database",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": "git@github.com:dflourusso/firebase-simple-queue.git",
   "author": "Daniel Fernando Lourusso <dflourusso@gmail.com>",
   "license": "MIT",
