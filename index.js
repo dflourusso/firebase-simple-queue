@@ -19,6 +19,7 @@ function parseError(error) {
 export default (key, callback) => {
   const databaseRef = admin.database().ref(key)
 
+  // Get next task without error
   function nextTask() {
     return databaseRef
       .child('tasks')
