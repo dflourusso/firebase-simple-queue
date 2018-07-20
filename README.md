@@ -47,7 +47,7 @@ export {
 }
 ```
 
-Add a index in database.rules
+Add an index in database.rules
 
 ```json
 {
