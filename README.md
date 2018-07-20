@@ -36,13 +36,14 @@ function calback(task) {
  * @param key A key for the realtime database tree
  * @param callback The callback with your custom logic
  */
-const { onCreateTask, onFinishTask } = queue('queue', callback)
+const { onCreateTask, onFinishTask, onRetryTask } = queue('queue', callback)
 
 // Now register the cloud functions triggers
 export {
   // ...another functions
   onCreateTask,
-  onFinishTask
+  onFinishTask,
+  onRetryTask
 }
 ```
 

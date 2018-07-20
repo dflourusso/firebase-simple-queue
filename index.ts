@@ -73,5 +73,9 @@ export default (key, callback) => {
     .ref(`/${key}/current`)
     .onDelete(startQueue)
 
-  return { onCreateTask, onFinishTask }
+  const onRetryTask = functions.database
+    .ref(`/${key}/tasks/{id}/_error`)
+    .onDelete(startQueue)
+
+  return { onCreateTask, onFinishTask, onRetryTask }
 }
