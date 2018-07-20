@@ -1,6 +1,6 @@
 {
   "name": "firebase-simple-queue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple queue implementation for firebase cloud functions and realtime database",
   "main": "dist/index.js",
   "repository": "git@github.com:dflourusso/firebase-simple-queue.git",
