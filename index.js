@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions'
-import * as admin from 'firebase-admin'
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
 
 function parseError(error) {
   let message = 'Error to process the task'
