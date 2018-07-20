@@ -32,6 +32,7 @@ function parseError(error) {
 exports.default = function (key, callback) {
   var databaseRef = admin.database().ref(key);
 
+  // Get next task without error
   function nextTask() {
     return databaseRef.child('tasks').orderByChild('_error').equalTo(null).limitToFirst(1).once('value').then(function (res) {
       return res.val();
