@@ -1,6 +1,6 @@
 {
   "name": "firebase-simple-queue",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Simple queue implementation for firebase cloud functions and realtime database",
   "keywords": [
     "job",
