@@ -38,13 +38,10 @@ export default (key, callback) => {
   async function runTask(options) {
     if (!options) return false
     const { id, task } = options
-    const current_id = await new Promise(resolve =>
-      databaseRef.child('current').transaction(p => {
-        const ret = p || id
-        resolve(ret)
-        return ret
-      })
-    )
+    const { snapshot } = await databaseRef
+      .child('current')
+      .transaction(p => p || id)
+    const current_id = snapshot.val()
 
     if (current_id != id) return false
 
