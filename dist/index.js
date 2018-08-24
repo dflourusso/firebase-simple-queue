@@ -44,7 +44,8 @@ exports.default = function (key, callback) {
   }
 
   function runTask(options) {
-    var id, task, current_id, updates;
+    var id, task, _ref, snapshot, current_id, updates;
+
     return Promise.resolve().then(function () {
       if (!options) {
         return false;
@@ -52,15 +53,13 @@ exports.default = function (key, callback) {
         return Promise.resolve().then(function () {
           id = options.id;
           task = options.task;
-          return new Promise(function (resolve) {
-            return databaseRef.child('current').transaction(function (p) {
-              var ret = p || id;
-              resolve(ret);
-              return ret;
-            });
+          return databaseRef.child('current').transaction(function (p) {
+            return p || id;
           });
         }).then(function (_resp) {
-          current_id = _resp;
+          _ref = _resp;
+          snapshot = _ref.snapshot;
+          current_id = snapshot.val();
 
 
           if (current_id != id) {
