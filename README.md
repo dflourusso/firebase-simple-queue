@@ -31,7 +31,7 @@ import queue from 'firebase-simple-queue'
 /* Define a callback with your custom async logic
  * You callback will receve as parameter witch you have been pushed in the task
  */
-function calback(task) {
+function callback(task, context) {
   return new Promise(resolve => {
     setTimeout(() => {
       // Do whatever you want.
@@ -44,7 +44,7 @@ function calback(task) {
  * @param key A key for the realtime database tree
  * @param callback The callback with your custom logic
  */
-const { onCreateTask, onFinishTask, onRetryTask } = queue('queue', callback)
+const { onCreateTask, onFinishTask, onRetryTask } = queue('somePath/{someParam}/queue', callback)
 
 // Now register the cloud functions triggers
 export {

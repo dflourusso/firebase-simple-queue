@@ -17,10 +17,8 @@ function parseError(error) {
 }
 
 export default (key, callback) => {
-  const databaseRef = admin.database().ref(key)
-
   // Get next task without error
-  function nextTask() {
+  function nextTask(databaseRef) {
     return databaseRef
       .child('tasks')
       .orderByChild('_error')
@@ -35,7 +33,7 @@ export default (key, callback) => {
       })
   }
 
-  async function runTask(options) {
+  async function runTask(databaseRef, options, context) {
     if (!options) return false
     const { id, task } = options
     const { snapshot } = await databaseRef
@@ -43,11 +41,11 @@ export default (key, callback) => {
       .transaction(p => p || id)
     const current_id = snapshot.val()
 
-    if (current_id != id) return false
+    if (current_id !== id) return false
 
     const updates = { current: null }
     try {
-      await callback(task)
+      await callback(task, context)
 
       updates[`tasks/${id}`] = null
     } catch (error) {
@@ -59,8 +57,13 @@ export default (key, callback) => {
     return true
   }
 
-  async function startQueue() {
-    return await runTask(await nextTask())
+  function replaceParams(params = {}) {
+    return Object.keys(params).reduce((str, p) => str.replace(`{${p}}`, params[p]), key)
+  }
+
+  async function startQueue(snapshot, context) {
+    const databaseRef = admin.database().ref(replaceParams(context.params))
+    return await runTask(databaseRef, await nextTask(databaseRef), context)
   }
 
   const onCreateTask = functions.database
