@@ -30,10 +30,8 @@ function parseError(error) {
 }
 
 exports.default = function (key, callback) {
-  var databaseRef = admin.database().ref(key);
-
   // Get next task without error
-  function nextTask() {
+  function nextTask(databaseRef) {
     return databaseRef.child('tasks').orderByChild('_error').equalTo(null).limitToFirst(1).once('value').then(function (res) {
       return res.val();
     }).then(function (res) {
@@ -43,7 +41,7 @@ exports.default = function (key, callback) {
     });
   }
 
-  function runTask(options) {
+  function runTask(databaseRef, options, context) {
     var id, task, _ref, snapshot, current_id, updates;
 
     return Promise.resolve().then(function () {
@@ -62,13 +60,13 @@ exports.default = function (key, callback) {
           current_id = snapshot.val();
 
 
-          if (current_id != id) {
+          if (current_id !== id) {
             return false;
           } else {
             return Promise.resolve().then(function () {
               updates = { current: null };
               return Promise.resolve().then(function () {
-                return callback(task);
+                return callback(task, context);
               }).then(function () {
 
                 updates['tasks/' + id] = null;
@@ -87,11 +85,24 @@ exports.default = function (key, callback) {
     }).then(function () {});
   }
 
-  function startQueue() {
+  function replaceParams() {
+    var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    return Object.keys(params).reduce(function (str, p) {
+      return str.replace('{' + p + '}', params[p]);
+    }, key);
+  }
+
+  function startQueue(snapshot, context) {
+    var databaseRef, _temp;
+
     return Promise.resolve().then(function () {
-      return nextTask();
+      databaseRef = admin.database().ref(replaceParams(context.params));
+      return Promise.all([databaseRef, nextTask(databaseRef), context]);
     }).then(function (_resp) {
-      return runTask(_resp);
+      _temp = _resp;
+
+      return runTask(_temp[0], _temp[1], _temp[2]);
     });
   }
 
