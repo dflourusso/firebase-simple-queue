@@ -1,4 +1,4 @@
-# firebase-simple-queue
+# firebase-simple-queue (Unmaintained)
 
 <a href="https://npmcharts.com/compare/firebase-simple-queue?minimal=true"><img src="https://img.shields.io/npm/dm/firebase-simple-queue.svg" alt="Downloads"></a>
 <a href="https://www.npmjs.com/package/firebase-simple-queue"><img src="https://img.shields.io/npm/v/firebase-simple-queue.svg" alt="Version"></a>
